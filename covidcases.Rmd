@@ -1,0 +1,53 @@
+---
+title: "Covid Cases"
+author: "Kieran Healy"
+date: "4/18/2021"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r libraries, message = FALSE}
+
+library(tidyverse)
+library(here)
+library(janitor)
+library(socviz)
+
+```
+
+```{r data, message = FALSE}
+covid_cases <- read_csv("data/national_cases.csv")
+```
+
+
+## Lorem Ipsum
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+```{r}
+covid_cases %>%
+  filter(country %in% c("United States", "United Kingdom", "France")) %>%
+  group_by(country) %>%
+  summarize(cases = sum(cases)) %>%
+  arrange(desc(cases)) %>% 
+  kable(caption = "Total cases in three countries.")
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+```{r}
+covid_cases %>%
+  filter(country %in% c("United States", "United Kingdom", "France")) %>%
+  ggplot(mapping = aes(x = date, 
+                       y = cases/pop, 
+                       color = country)) +
+  geom_line() 
+```
+
